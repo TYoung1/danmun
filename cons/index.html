@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/home.css">
+    <script src="https://kit.fontawesome.com/ec5d781ab7.js"
+	crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo"><h3>단먼</h3></a>
+        <ul>
+            <li><a href="#">수능단어</a></li>
+            <li><a href="#">토익단어</a></li>
+            <li><a href="#">토스단어</a></li>
+            <li><a href="#">오픽단어</a></li>
+        </ul>
+    </nav>
+    <div class="main">
+        <div class="wrapper">
+            <div class="top">
+                <div class="ban">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="ban_wrap">
+                                    <img src="../img/ban3.png" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="ban_wrap">
+                                    <img src="../img/ban2.png" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="ban_wrap">
+                                    <img src="../img/ban.png" width="100%" height="100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h1>Word of the day</h1>
+                    <div class="t_word">
+                        <figure class="front">
+                            <img src="../img/kocard.png" alt="영단어">
+                            <figcaption>
+                                영단어
+                            </figcaption>
+                        </figure>
+                        <figure class="back">
+                            <img src="../img/engcard.png" alt="한국단어">
+                            <figcaption>
+                                한국어
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <div class="login">
+                    <form>
+                        <h1>Sign in</h1>
+                        <label>ID</label><br>
+                        <input type="text" class="id"><br>
+                        <label>PW</label><br>
+                        <input type="text" class="password"><br>
+                        <button type="submit" class="log">Login</button>
+                        <div class="another">
+                            <div class="findid">Find ID</div>
+                            <div class="findpw">Find PW</div>
+                            <div class="singup">Sign up</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="middle">
+            <div class="wrapper">
+                <div class="search_box">
+                    <input type="text"class="search">
+                    <button type="submit" class="sb"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="submid">
+            <div class="wrapper2">
+                <div class="save">
+                    <div class="save_t">영단어장</div>
+                    <div class="save_main">
+                        <form>
+                            <input type="text" name="eng">
+                            <input type="text" name="ko">
+                            <button>저장</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="../js/swiper.js"></script>
+</body>
+</html>
