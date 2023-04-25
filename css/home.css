@@ -19,6 +19,7 @@ nav{
     padding: 0 50px;
     line-height: 50px;   
 }
+
 nav li{
     float: left;
     margin-right: 15px;
@@ -49,7 +50,7 @@ nav li a{
 .card{
     width: 450px;
     height: 600px;
-    border: 1px solid 	#6495ED;
+    border: 3px solid 	#6495ED;
     border-radius: 40px;
 }
 .card h1{
@@ -81,7 +82,7 @@ nav li a{
     width: 450px;
     height: 600px;
     border-radius: 40px;
-    border: 1px solid 	#6495ED;
+    border: 3px solid 	#6495ED;
     padding-top: 150px;
 }
 .login form{
@@ -91,6 +92,7 @@ nav li a{
 }
 .login h1{
     text-align: center;
+    color: #CC9999;
 }
 .login label{
     font-size: 12px;
@@ -99,11 +101,22 @@ nav li a{
     width: 100%;
     height: 30px;
     margin-bottom: 20px;
+    border-top:none;
+    border-left: none;
+    border-right: none;
+}
+.login input:focus{
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #6699CC;
 }
 .log{
     width: 100%;
-    height: 30px;
+    height: 40px;
     margin-bottom: 10px;
+    background: #B0C4DE;
+    border: none;
+    cursor: pointer;
 }
 #signup{
     float: right;
@@ -119,14 +132,14 @@ nav li a{
 .another > div{
     width: 60px;height: 60px;
     border-radius: 50%;
-    border: 3px solid gray;
+    border: 3px solid #B0C4DE;
     display: flex;
     align-items: center;
     font-size: 12px;
     justify-content: center;
 }
-.findid{
-    
+.main{
+    position: relative;
 }
 .t_word img{
     width: 100%;
@@ -169,7 +182,7 @@ figcaption{
 .t_word:hover .front{transform: rotateY(180deg);}
 .t_word:hover .back{transform: rotateY(0deg);z-index: 1;}
 .middle{
-    margin-top: 50px;
+    margin:50px 0;
 }
 .search_box{
     width:100%;
@@ -180,7 +193,7 @@ figcaption{
     width: 95%;
     height: 50px;
     border-radius: 25px 0 0 25px;
-    border: 1px solid #888;
+    border: 3px solid #888;
     font-size: 20px;
     padding:0 40px;
     border-right: 0;
@@ -189,7 +202,7 @@ figcaption{
     width: 5%;
     height: 50px;
     border-radius: 0 25px 25px 0;
-    border: 1px solid #888;
+    border: 3px solid #888;
     background: none;
     font-size: 20px;
     cursor: pointer;
@@ -197,6 +210,96 @@ figcaption{
 }
 .search:focus{
     outline: none;
-    border: 1px solid #6495ED;
+    border: 3px solid #6495ED;
     border-right: 0;
+}
+.list{
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+}
+.list h2{
+    color:#6699CC;
+    padding-bottom: 20px;
+}
+.list h2 a{
+    color: #6699CC;
+    float: right;
+}
+.list_top{
+    display: flex;
+    border: 1px solid #6495ED;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    border-radius: 15px 15px 0 0;
+    border-bottom: none;
+}
+.list_top > div{
+    text-align: center; 
+    border-right: 1px solid #e7e7e7;
+}
+.list_top > div:last-child{
+    border-right: none;
+}
+.seq,.seq_t{
+    width: 10%;
+}
+.word,.word_t{
+    width: 35%;
+}
+.mean,.mean_t{
+    width: 45%;
+}
+.check,.check_t{
+    width: 10%;
+}
+.check_t{
+    display: flex;
+    align-items: center;
+}
+.index{
+    border: 1px solid #6495ED;
+    border-radius: 0 0 15px 15px;
+}
+.word_wrap{
+    display: flex;
+    text-align: center;
+}
+#save{
+    width: 100%;
+    height: 100%;
+    background: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 15px 0 0;
+    color: #000;
+    font-weight: bold;
+}
+
+.word_wrap > div{
+    padding: 15px 0;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.word_wrap > div:last-child{
+    border-right: none;
+}
+/* .active{
+    background: #B0C4DE;
+} */
+.word_wrap:hover{
+    background: #B0C4DE;
+}
+#goup{
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+    border-radius: 50%;
+    font-size: 20px;
+    border: #e7e7e7;
+    color: #fff;
+    background: #6495ED;
 }

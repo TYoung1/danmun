@@ -19,6 +19,8 @@
             <li><a href="#">토익단어</a></li>
             <li><a href="#">토스단어</a></li>
             <li><a href="#">오픽단어</a></li>
+            <li><a href="#">단어테스트</a></li>
+            <li><a href="#">오픽단어</a></li>
         </ul>
     </nav>
     <div class="main">
@@ -90,19 +92,33 @@
         <div class="submid">
             <div class="wrapper2">
                 <div class="save">
-                    <div class="save_t">영단어장</div>
-                    <div class="save_main">
-                        <form>
-                            <input type="text" name="eng">
-                            <input type="text" name="ko">
-                            <button>저장</button>
-                        </form>
+                    <div class="list"><h2>많이 찾는 단어<a href="#"><i class="fa-solid fa-plus"></i></a></h2></div>
+                    <form action="">
+                    <div class="list_main">
+                        <div class="list_top">
+                            <div class="seq_t">순서</div><div class="word_t">단어</div><div class="mean_t">의미</div><div class="check_t"><button id="save">저장</button></div>
+                        </div>
+                        <div class="index">
+                            <div class="word_wrap"><div class="seq">1</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save" value="퍼센트seq"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                            <div class="word_wrap"><div class="seq">2</div><div class="word">word</div><div class="mean">단어</div><div class="check"><input type="checkbox" name="save"></div></div>
+                        </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+        <button id="goup"><i class="fa-solid fa-chevron-up"></i></button>
     </div>  
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="../js/swiper.js"></script>
+    <script src="../js/func.js"></script>
 </body>
 </html>
