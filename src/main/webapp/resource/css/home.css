@@ -137,6 +137,7 @@ nav li a{
     align-items: center;
     font-size: 12px;
     justify-content: center;
+    cursor: pointer;
 }
 .main{
     position: relative;
@@ -291,6 +292,36 @@ figcaption{
 .word_wrap:hover{
     background: #B0C4DE;
 }
+.move{
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.move > div{
+    width: 250px;
+    height:250px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 30px; 
+    cursor: pointer;
+}
+.toeic{
+    background: url(../img/toeic.png);
+}
+.toeic_s{
+    background: url(../img/toeic_s.png);
+}
+.opic{
+        background: url(../img/opic.png);
+}
+.suneung{
+    background: url(../img/suneung.png);
+}
 #goup{
     width: 60px;
     height: 60px;
@@ -302,4 +333,5 @@ figcaption{
     border: #e7e7e7;
     color: #fff;
     background: #6495ED;
+    cursor: pointer;
 }
