@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ page import="DAO.db_con"%>
+    <%@ page import="DTO.user"%>
+    <%@ page import="DTO.word"%>
+    <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,12 +33,22 @@
             </div>
         </div>
     </div>
+     
     <div class="content">
         <div class="wrapper2">
-            <div class="word">
-                <h1>English <span class="more"><a href="#">+</a></span></h1>
-                <h2>뜻 : <span id="mean">영어</span></h2>
-            </div>
+            <% 
+                	db_con db = new db_con();
+                user User = new user();
+               		word day = db.oneword();
+               		ArrayList<word> wordList = (ArrayList<word>)request.getAttribute("wordList"); 
+               		%>
+                <% %>
+				<% for (word each : wordList) { %>
+				<div class="word">
+				<h1><%= each.getWord() %> <span class="more"><a href="#">+</a></span></h1>
+				<h2>뜻 : <span id="mean"><%= each.getMean() %></span></h2>
+				 </div>
+				<% } %>
             <div class="word">
                 <h1>English <span class="more"><a href="#">+</a></span></h1>
                 <h2>뜻 : <span id="mean">영어</span></h2>

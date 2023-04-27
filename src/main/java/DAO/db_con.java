@@ -1,11 +1,19 @@
 package DAO;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.Session;
+
+import DTO.myword;
 import DTO.user;
 import DTO.word;
 
@@ -40,24 +48,49 @@ public class db_con {
 //		pstmt.setInt(4,User.getAge());
 //		pstmt.setString(5, User.getGender());
 //	}
-	public void signin_user(user User) {
+	public void signin_user(HttpServletRequest request, HttpServletResponse response, user User) throws IOException {
 		try {
-//			현재 시간날짜 가져오는 쿼리 
-			String sql = "select * from user where _userid = ? and _userpw = ?";
+//			
+			String sql = "select * from user where _userid = ? ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-//			쿼리문 실행결과 res에 담아주기
-//			executeQuery select문에 사용
 			pstmt.setString(1,User.getUserid());
-			pstmt.setString(2,User.getUserpw());
 			res = pstmt.executeQuery();
+			boolean idexist = false;
 			if (res.next()) {
 				String id = res.getString("_userid");
 				String pw = res.getString("_userpw");
 				String name = res.getString("_username");
 				int grant = res.getInt("_grant");
+				if(id.equals(User.getUserid())) {
+					idexist= true;
+					if(pw.equals(User.getUserpw())) {
+//						모두 일치할 경우
+						HttpSession session = request.getSession();
+						session.setAttribute("userId",id);
+						session.setAttribute("userPw",pw);
+						session.setAttribute("name",name);
+						session.setAttribute("grant",grant);
+						
+						response.sendRedirect("home.jsp");
+					}
+					else {
+//						비밀번호가 틀릴경우 
+						HttpSession session = request.getSession();
+						session.setAttribute("chk", "1");
+						response.sendRedirect("home.jsp");
+					}
+				}
+			}
+//			아이디가 틀렷을경우
+			if(!idexist) {
+				HttpSession session = request.getSession();
+				session.setAttribute("chk", "2");
+				response.sendRedirect("home.jsp");
 			}
 		} catch (Exception e) {
+			response.sendRedirect("home.jsp");
 			e.printStackTrace();
+			
 		}
 	}
 	public word oneword() {
@@ -81,8 +114,8 @@ public class db_con {
 		String sql = "select _seq,_word,_mean from word order by _count desc limit 10";
 		ArrayList<word> list = new ArrayList<word>();
 		try {
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			res = psmt.executeQuery();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			res = pstmt.executeQuery();
 			while (res.next()) {
 				word best = new word();
 //				 SEQ,TITLE,게시날짜  객체에 저장 
@@ -96,4 +129,51 @@ public class db_con {
 		}
 		return list;
 	}
+	public ArrayList<word>getallWord(word _word){
+		String sql = "select _seq,_word,_mean from word where _word like ?";
+		ArrayList<word> list = new ArrayList<word>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			System.out.println(_word.getWord());
+			pstmt.setString(1,_word.getWord()+"%");
+			res = pstmt.executeQuery();
+			
+			while (res.next()) {
+				word each = new word();
+//				 SEQ,TITLE,게시날짜  객체에 저장 
+				each.setSeq(res.getInt(1));
+				each.setWord(res.getString(2));
+				each.setMean(res.getString(3));
+				list.add(each);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public void addWord(myword mw) {
+		String sql = "insert into myword values(?,?)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,mw.getId());
+			pstmt.setInt(2,mw.getSeq());
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+//	public void plusWord(int[] save) {
+//		try {
+//		for(int i=0;i<save.length;i++) {
+//		String sql = "insert into myword values(?,?)";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1,);
+//		pstmt.setInt(2,save[i]);
+//		}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

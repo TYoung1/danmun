@@ -1,6 +1,7 @@
-package loginServlet;
+package addwordServlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,19 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.db_con;
-import DTO.user;
+import DTO.myword;
+import DTO.word;
 
 /**
- * Servlet implementation class loginForm
+ * Servlet implementation class addForm
  */
-@WebServlet("/login")
-public class loginForm extends HttpServlet {
+@WebServlet("/addForm")
+public class addForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public loginForm() {
+    public addForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +34,18 @@ public class loginForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
+		
 		try {
+			response.setContentType("text/html; charset=UTF-8");
 			db_con _Db = new db_con();
-			user User = new user();
-			User.setUserid(request.getParameter("user_id"));
-			User.setUserpw(request.getParameter("user_pw"));
-
-//				로그인 함수 호출 
-			_Db.signin_user(request,response,User);
+			myword mw = new myword();
+			mw.setId(request.getParameter("id"));
+			mw.setSeq(Integer.parseInt(request.getParameter("save")));
+			_Db.addWord(mw);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
