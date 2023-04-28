@@ -17,7 +17,7 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo"><h3>단먼</h3></a>
+        <a href="home.jsp" class="logo"><h3>단먼</h3></a>
         <ul>
             <li><a href="#">수능단어</a></li>
             <li><a href="#">토익단어</a></li>
@@ -36,7 +36,7 @@
      
     <div class="content">
         <div class="wrapper2">
-            <% 
+           <% 
                 	db_con db = new db_con();
                 user User = new user();
                		word day = db.oneword();
@@ -49,18 +49,7 @@
 				<h2>뜻 : <span id="mean"><%= each.getMean() %></span></h2>
 				 </div>
 				<% } %>
-            <div class="word">
-                <h1>English <span class="more"><a href="#">+</a></span></h1>
-                <h2>뜻 : <span id="mean">영어</span></h2>
-            </div>
-            <div class="word">
-                <h1>English <span class="more"><a href="#">+</a></span></h1>
-                <h2>뜻 : <span id="mean">영어</span></h2>
-            </div>
-            <div class="word">
-                <h1>English <span class="more"><a href="#">+</a></span></h1>
-                <h2>뜻 : <span id="mean">영어</span></h2>
-            </div>
+           
         </div>
     </div>
 </body>

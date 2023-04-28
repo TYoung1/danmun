@@ -130,7 +130,7 @@ table tbody tr{
 }
 .r_bottom input:focus{
     outline: none;
-    border: 2px solid #B0E0E6;
+    border: 3px solid #CC9999;
 }
 .r_bottom button{
     float: right;
@@ -138,4 +138,21 @@ table tbody tr{
     height: 50px;
     background: #B0C4DE;
     border: 1px solid #e8e8e8;
+}
+.page{
+	width:200px;
+	margin:0 auto;
+	margin-top:20px;
+	text-align:center;
+	font-size:17px;
+	font-weight:700;
+}
+.page ul{
+    list-style: none;
+    display: flex;
+    padding-left: 15px;
+    justify-content:center;
+}
+.page ul li{
+	padding: 0 10px;
 }

@@ -18,6 +18,20 @@
 	href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
 <body>
+			<%String _dup = (String)session.getAttribute("dup"); %>
+					<% if(_dup == "1"){ 
+                       		session.removeAttribute("dup");
+                       	%>
+                       	<script>
+							alert("이미 저장되어 있는 단어가 포함되어 있습니다");
+						</script>
+                       	<%}else if(_dup == "0"){
+                       		session.removeAttribute("dup");
+                           	%>
+                           	<script>
+    							alert("로그인 후 이용하실 수 있습니다");
+    						</script>
+                       	<%} %>
 
     <nav>
         <a href="#" class="logo"><h3>단먼</h3></a>
@@ -80,6 +94,7 @@
                 	String _id = (String)session.getAttribute("userId");
                 	Integer _grant = (Integer)session.getAttribute("grant");
                 	String _name = (String)session.getAttribute("name");
+                	String count = db.countWord(_id);
       				String _chk = (String)session.getAttribute("chk");
                 %>
                   	<% if(_chk == "1"){ 
@@ -121,8 +136,8 @@
 	                    <form>
 	                        <h2> <%=_name%>님 환영합니다</h2>
 	                        <ul>
-	                            <li style="text-align:center"><a href="#">내 단어장</a></li>
-	                            <li>저장된 단어 : <span>128개</span> </li>
+	                            <li style="text-align:center;"><a href="myword.jsp">내 단어장</a></li>
+	                            <li>저장된 단어 : <span><%= count %>개</span> </li>
 	                            <li>Level : <span>2</span></li>
 	                        </ul>
 	                        <div class="another">
@@ -136,8 +151,8 @@
                     <form>
                         <h2> <%=_name%>님 환영합니다</h2>
                         <ul>
-                            <li style="text-align:center"><a href="#">내 단어장</a></li>
-                            <li>저장된 단어 : <span>128개</span> </li>
+                            <li style="text-align:center;"><a href="myword.jsp">내 단어장</a></li>
+                            <li>저장된 단어 : <span><%= count %>개</span> </li>
                             <li>Level : <span>2</span></li>
                         </ul>
                         <div class="another">

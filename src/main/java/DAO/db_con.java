@@ -151,29 +151,80 @@ public class db_con {
 		}
 		return list;
 	}
-	public void addWord(myword mw) {
-		String sql = "insert into myword values(?,?)";
+	
+	public void addWord(HttpServletRequest request, HttpServletResponse response,String id, int[] save) throws IOException {
+		String sql = "insert into myword (_userid,_seq) values(?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1,mw.getId());
-			pstmt.setInt(2,mw.getSeq());
-			pstmt.executeUpdate();
+			if(id.equals("null")) {
+				HttpSession session = request.getSession();
+				session.setAttribute("dup", "0");
+				response.sendRedirect("home.jsp");
+			}else {
+				pstmt.setString(1,id);
+			for(int i=0;i<save.length;i++) {
+				pstmt.setInt(2,save[i]);
+				pstmt.executeUpdate();
+			}
+			response.sendRedirect("home.jsp");
+			}
 		}
 		catch(Exception e) {
+			HttpSession session = request.getSession();
+			session.setAttribute("dup", "1");
+			response.sendRedirect("home.jsp");
 			e.printStackTrace();
+			
 		}
 		
 	}
-//	public void plusWord(int[] save) {
-//		try {
-//		for(int i=0;i<save.length;i++) {
-//		String sql = "insert into myword values(?,?)";
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
-//		pstmt.setString(1,);
-//		pstmt.setInt(2,save[i]);
-//		}
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public String countWord(String id) {
+		String sql = "select count(_userid) from myword where _userid = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			res = pstmt.executeQuery();
+			if(res.next()) {
+				return res.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "0";
+	}
+	public ArrayList<word>mywordList(String id,int page) {
+		String sql = "select A._seq,_word,_mean from myword as A inner join word as B on A._seq = B._seq where A._userid = ? order by _order limit ?,10";
+		ArrayList<word> list = new ArrayList<word>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, (page - 1) * 10);
+			res=pstmt.executeQuery();
+			while(res.next()) {
+				word mine = new word();
+				mine.setSeq(res.getInt(1));
+				mine.setWord(res.getString(2));
+				mine.setMean(res.getString(3));
+				list.add(mine);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public void deleteWord(HttpServletRequest request, HttpServletResponse response,String id,int[]Seq) {
+		String sql = "delete from myword where _userid = ? and _seq = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+			for(int i=0;i<Seq.length;i++) {
+			pstmt.setInt(2,Seq[i]);
+			pstmt.executeUpdate();
+			}
+			response.sendRedirect("myword.jsp");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

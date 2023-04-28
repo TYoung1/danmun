@@ -1,7 +1,6 @@
-package addwordServlet;
+package delmineServlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import DAO.db_con;
 import DTO.myword;
-import DTO.word;
 
 /**
- * Servlet implementation class addForm
+ * Servlet implementation class delmineForm
  */
-@WebServlet("/addForm")
-public class addForm extends HttpServlet {
+@WebServlet("/deletemine")
+public class delmineForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addForm() {
+    public delmineForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,18 +31,19 @@ public class addForm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 		
 		try {
 			response.setContentType("text/html; charset=UTF-8");
 			db_con _Db = new db_con();
+			myword mw = new myword();
 			String _id = (request.getParameter("id"));
-			String []sWord = request.getParameterValues("save");
-			int []saveWord = new int [sWord.length];
-			for(int j =0;j<saveWord.length;j++) {
-				saveWord[j] = Integer.parseInt(sWord[j]);
+			String []delWord = request.getParameterValues("del");
+			int []deleteSeq = new int [delWord.length];
+			for(int j =0;j<deleteSeq.length;j++) {
+				deleteSeq[j] = Integer.parseInt(delWord[j]);
 			}
-			_Db.addWord(request,response,_id,saveWord);
+			_Db.deleteWord(request,response,_id,deleteSeq);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

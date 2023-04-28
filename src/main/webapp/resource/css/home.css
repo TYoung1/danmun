@@ -128,6 +128,10 @@ nav li a{
 .login li{
     padding: 15px 0;
 }
+.login li a{
+	color:#6A5ACD;
+	font-size:18px;
+}
 .login span{
     float: right;
 }
