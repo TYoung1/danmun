@@ -90,9 +90,11 @@ table tbody tr{
     text-align: center;
     padding: 60px;
 }
-.r_top h2{
+.r_top h2, .r_bottom h2{
     color: #B0C4DE;
+    text-align:center;
 }
+
 .info{
     font-weight: bold;
     font-size: 15px;
@@ -133,11 +135,18 @@ table tbody tr{
     border: 3px solid #CC9999;
 }
 .r_bottom button{
-    float: right;
-    width: 100px;
+    margin-top:15px;
+    width: 100%;
     height: 50px;
     background: #B0C4DE;
     border: 1px solid #e8e8e8;
+}
+.r_bottom h3{
+	margin-top:50px;
+	display:block;
+	width:100%;
+	color:#cc9999;
+	text-align:center;
 }
 .page{
 	width:200px;

@@ -125,7 +125,7 @@
                         <div class="another">
                             <div class="findid" onclick="location.href='findid.html'">Find ID</div>
                             <div class="findpw" onclick="location.href='findpw.html'">Find PW</div>
-                            <div class="singup" onclick="location.href='signup.html'">Sign up</div>
+                            <div class="singup" onclick="location.href='signup.jsp'">Sign up</div>
                         </div>
                     </form>
                 </div>
@@ -142,7 +142,7 @@
 	                        </ul>
 	                        <div class="another">
 	                            <div class="findid" onclick="location.href='logout.jsp'">로그아웃</div>
-	                            <div class="singup" onclick="location.href='signup.html'">회원탈퇴</div>
+	                            <div class="singup" onclick="location.href='quit.jsp'">회원탈퇴</div>
 	                        </div>
 	                    </form>
 	                </div>
@@ -159,7 +159,7 @@
                         <div class="findid" onclick="location.href='logout.jsp'">공지쓰기</div>
                             <div class="singup" onclick="location.href='signup.html'">회원관리</div>
                             <div class="findid" onclick="location.href='logout.jsp'">로그아웃</div>
-                            <div class="singup" onclick="location.href='signup.html'">회원탈퇴</div>
+                            <div class="singup" onclick="location.href='quit.jsp'">회원탈퇴</div>
                         </div>
                     </form>
                 </div>
@@ -183,7 +183,7 @@
         <div class="submid">
             <div class="wrapper2">
                 <div class="save">
-                    <div class="list"><h2>많이 찾는 단어<a href="#"><i class="fa-solid fa-plus"></i></a></h2></div>
+                    <div class="list"><h2>많이 찾는 단어<a href="typeword.jsp?type=0"><i class="fa-solid fa-plus"></i></a></h2></div>
                     <form method="post" action="addForm">
                     <div class="list_main">
                         <div class="list_top">
@@ -203,10 +203,10 @@
                     </form>
                 </div>
                 <div class="move">
-                    <div class="toeic" onclick="location.href='toeic.html'"></div>
-                    <div class="toeic_s" onclick="location.href='tos.html'"></div>
-                    <div class="opic" onclick="location.href='opic.html'"></div>
-                    <div class="suneung" onclick="location.href='suneung.html'"></div>
+                    <div class="toeic" onclick="location.href='typeword.jsp?type=1'"></div>
+                    <div class="suneung" onclick="location.href='typeword.jsp?type=2'"></div>
+                    <div class="opic" onclick="location.href='typeword.jsp?type=3'"></div>
+                    <div class="toeic_s" onclick="location.href='typeword.jsp?type=4'"></div>
                 </div>
             </div>
         </div>

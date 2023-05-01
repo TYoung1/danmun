@@ -1,4 +1,4 @@
-package signupServlet;
+package addOneServlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.db_con;
-import DTO.user;
 
 /**
- * Servlet implementation class signupForm
+ * Servlet implementation class addoneForm
  */
-@WebServlet("/signup")
-public class signupForm extends HttpServlet {
+@WebServlet("/addone")
+public class addoneForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public signupForm() {
+    public addoneForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,19 +31,16 @@ public class signupForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
+				
 		try {
+			response.setContentType("text/html; charset=UTF-8");
 			db_con _Db = new db_con();
-			user User = new user();
-			User.setUserid(request.getParameter("user_id"));
-			User.setUserpw(request.getParameter("user_pw"));
-			User.setUsername(request.getParameter("user_name"));
-			User.setAge(Integer.parseInt(request.getParameter("user_age")));
-			User.setGender(request.getParameter("user_gender"));
-
-
-			_Db.signup_user(request,response,User);
+			String _id = (request.getParameter("id"));
+			String word = request.getParameter("addword");
+			
+			_Db.addone(request,response,_id,word);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 

@@ -38,16 +38,25 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
-//	public void signup_user(user User) {
-//		String sql = "insert into user values(?,?,?,?,?)";
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
-//		res= pstmt.executeUpdate();
-//		pstmt.setString(1, User.getUserid());
-//		pstmt.setString(2,User.getUserpw());
-//		pstmt.setString(3,User.getUsername());
-//		pstmt.setInt(4,User.getAge());
-//		pstmt.setString(5, User.getGender());
-//	}
+	public void signup_user(HttpServletRequest request, HttpServletResponse response,user User) throws IOException {
+		String sql = "insert into user (_userid,_userpw,_username,_userage,_gender) values(?,?,?,?,?)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, User.getUserid());
+			pstmt.setString(2,User.getUserpw());
+			pstmt.setString(3,User.getUsername());
+			pstmt.setInt(4,User.getAge());
+			pstmt.setString(5, User.getGender());
+			pstmt.executeUpdate();
+			response.sendRedirect("home.jsp");
+		}catch(Exception e) {
+//			아이디 중복
+			HttpSession session = request.getSession();
+			session.setAttribute("chk", "1");
+			response.sendRedirect("signup.jsp");
+			e.printStackTrace();
+		}
+	}
 	public void signin_user(HttpServletRequest request, HttpServletResponse response, user User) throws IOException {
 		try {
 //			
@@ -70,7 +79,7 @@ public class db_con {
 						session.setAttribute("userPw",pw);
 						session.setAttribute("name",name);
 						session.setAttribute("grant",grant);
-						
+							
 						response.sendRedirect("home.jsp");
 					}
 					else {
@@ -91,6 +100,17 @@ public class db_con {
 			response.sendRedirect("home.jsp");
 			e.printStackTrace();
 			
+		}
+	}
+	public void deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
+		String sql = "delete from user where _userid = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+			pstmt.executeUpdate();
+			response.sendRedirect("logout.jsp");
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	public word oneword() {
@@ -226,5 +246,42 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+	public void addone(HttpServletRequest request, HttpServletResponse response,String id,String word) throws IOException {
+		String sql = "insert into myword (_userid,_seq) values(?,(select _seq from  word where _word = ?))";	
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2,word);
+			pstmt.executeUpdate();
+			response.sendRedirect("myword.jsp");
+		}catch(Exception e) {
+			HttpSession session = request.getSession();
+			session.setAttribute("message","1");
+			response.sendRedirect("myword.jsp");
+			e.printStackTrace();
+		}
+	}
+	public ArrayList<word>gettypeWord(int type){
+		String sql = "select _seq,_word,_mean from word where _type = ?";
+		ArrayList<word> list = new ArrayList<word>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,type);
+			res = pstmt.executeQuery();
+			
+			while (res.next()) {
+				word each = new word();
+//				 SEQ,TITLE,게시날짜  객체에 저장 
+				each.setSeq(res.getInt(1));
+				each.setWord(res.getString(2));
+				each.setMean(res.getString(3));
+				list.add(each);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
 }

@@ -21,6 +21,11 @@
                 	String _name = (String)session.getAttribute("name");
                 	String count = db.countWord(_id);
       				String _chk = (String)session.getAttribute("chk");
+      				String message = "";
+      				if(session.getAttribute("message") != null){
+      					message = "찾을수 없는 단어입니다";
+      				};
+      				session.removeAttribute("message");
       				int pag = 1; // 기본페이지 기본적으로 페이지 1부터 시작하므로
       			    if (request.getParameter("npage") != null)
       			    {
@@ -113,10 +118,13 @@
                         </div>
                     </div>
                     <div class="r_bottom">
-                        <form	>
-                            <input type="text" placeholder="단어를 입력해주세요"><br>
-                            <input type="text" placeholder="의미를 입력해주세요"><br>
+                        <form action ="addone" method="post">
+                        <h2>More Word</h2>
+                            <input type="text" name="addword" placeholder="단어를 입력해주세요"><br>
                             <button type="submit">추가</button>
+                            <h3><%= message %>.</h3>
+                            <input type="hidden" name="id" value="<%= _id %>"/>
+                            
                         </form>
                     </div>
                 </div>

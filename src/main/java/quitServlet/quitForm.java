@@ -1,4 +1,4 @@
-package signupServlet;
+package quitServlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,16 +11,16 @@ import DAO.db_con;
 import DTO.user;
 
 /**
- * Servlet implementation class signupForm
+ * Servlet implementation class quitForm
  */
-@WebServlet("/signup")
-public class signupForm extends HttpServlet {
+@WebServlet("/quit")
+public class quitForm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public signupForm() {
+    public quitForm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +34,9 @@ public class signupForm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		try {
 			db_con _Db = new db_con();
-			user User = new user();
-			User.setUserid(request.getParameter("user_id"));
-			User.setUserpw(request.getParameter("user_pw"));
-			User.setUsername(request.getParameter("user_name"));
-			User.setAge(Integer.parseInt(request.getParameter("user_age")));
-			User.setGender(request.getParameter("user_gender"));
+			String _id = (request.getParameter("id"));
 
-
-			_Db.signup_user(request,response,User);
+			_Db.deleteUser(request,response,_id);
 		} catch (Exception e) {
 
 		}
