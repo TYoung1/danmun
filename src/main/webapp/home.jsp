@@ -36,12 +36,11 @@
     <nav>
         <a href="#" class="logo"><h3>단먼</h3></a>
         <ul>
-            <li><a href="#">수능단어</a></li>
-            <li><a href="#">토익단어</a></li>
-            <li><a href="#">토스단어</a></li>
-            <li><a href="#">오픽단어</a></li>
+            <li><a href="typeword.jsp?type=2">수능단어</a></li>
+            <li><a href="typeword.jsp?type=1">토익단어</a></li>
+            <li><a href="typeword.jsp?type=4">토스단어</a></li>
+            <li><a href="typeword.jsp?type=3">오픽단어</a></li>
             <li><a href="#">단어테스트</a></li>
-            <li><a href="#">오픽단어</a></li>
         </ul>
     </nav>
     <div class="main">
@@ -183,7 +182,7 @@
         <div class="submid">
             <div class="wrapper2">
                 <div class="save">
-                    <div class="list"><h2>많이 찾는 단어<a href="typeword.jsp?type=0"><i class="fa-solid fa-plus"></i></a></h2></div>
+                    <div class="list"><h2>많이 찾는 단어<a href="bestlist.jsp"><i class="fa-solid fa-plus"></i></a></h2></div>
                     <form method="post" action="addForm">
                     <div class="list_main">
                         <div class="list_top">

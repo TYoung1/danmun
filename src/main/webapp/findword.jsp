@@ -16,6 +16,15 @@
     <title>Document</title>
 </head>
 <body>
+	<% String _id = (String)session.getAttribute("userId"); %>
+	<%String _dup = (String)session.getAttribute("dup"); %>
+					<% if(_dup == "1"){ 
+                       		session.removeAttribute("dup");
+                       	%>
+                       	<script>
+							alert("이미 저장되어 있는 단어가 포함되어 있습니다");
+						</script>
+                       	<%}%>
     <nav>
         <a href="home.jsp" class="logo"><h3>단먼</h3></a>
         <ul>
@@ -26,13 +35,15 @@
         </ul>
     </nav>
     <div class="middle">
-        <div class="wrapper">
-            <div class="search_box">
-                <input type="text"class="search">
-                <button type="submit" class="sb"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class="wrapper">
+            	<form action ="search" method="post">
+                <div class="search_box">
+                    <input type="text"class="search" name="searchWord">
+                    <button type="submit" class="sb"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                </form>
             </div>
         </div>
-    </div>
      
     <div class="content">
         <div class="wrapper2">
@@ -40,17 +51,20 @@
                 	db_con db = new db_con();
                 user User = new user();
                		word day = db.oneword();
-               		ArrayList<word> wordList = (ArrayList<word>)request.getAttribute("wordList"); 
-               		%>
-                <% %>
-				<% for (word each : wordList) { %>
+               		ArrayList<word> wordList =(ArrayList<word>)session.getAttribute("list");
+               		 for (word each : wordList) { %>
 				<div class="word">
-				<h1><%= each.getWord() %> <span class="more"><a href="#">+</a></span></h1>
+				<h1><%= each.getWord() %> <span class="more"><form method="post" action="addatlist" onsubmit="return chkid()"><button type="submit">+</button>
+				<input type="hidden" name="addword" value="<%= each.getSeq() %>">
+				 <input type="hidden" name="id" id="idval" value="<%= _id %>">
+				 <input type ="hidden" name="type" value="8">
+				 </form></span></h1>
 				<h2>뜻 : <span id="mean"><%= each.getMean() %></span></h2>
 				 </div>
 				<% } %>
            
         </div>
     </div>
+    <script src="resource/js/add.js"></script>
 </body>
 </html>

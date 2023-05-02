@@ -35,12 +35,11 @@
     <nav>
         <a href="home.jsp" class="logo"><h3>단먼</h3></a>
         <ul>
-            <li><a href="#">수능단어</a></li>
-            <li><a href="#">토익단어</a></li>
-            <li><a href="#">토스단어</a></li>
-            <li><a href="#">오픽단어</a></li>
+           <li><a href="typeword.jsp?type=2">수능단어</a></li>
+            <li><a href="typeword.jsp?type=1">토익단어</a></li>
+            <li><a href="typeword.jsp?type=4">토스단어</a></li>
+            <li><a href="typeword.jsp?type=3">오픽단어</a></li>
             <li><a href="#">단어테스트</a></li>
-            <li><a href="#">오픽단어</a></li>
         </ul>
     </nav>
     <div class="main">

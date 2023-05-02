@@ -23,6 +23,10 @@ nav li{
     float: left;
     margin-right: 15px;
 }
+nav li a{
+    color: #888;
+    font-weight: 700;
+}
 .logo{
     color: #B0C4DE;
 }
@@ -71,6 +75,12 @@ nav li{
     border-radius: 15px;
     padding: 10px;
     margin: 15px 0;
+}
+.word button{
+	font-size:30px;
+	background:none;
+	border:none;
+	cursor:pointer;	
 }
 .more{
     float: right;

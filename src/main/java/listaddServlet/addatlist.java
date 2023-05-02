@@ -1,8 +1,6 @@
-package searchServlet;
+package listaddServlet;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.db_con;
-import DTO.word;
 
 /**
- * Servlet implementation class searchForm
+ * Servlet implementation class addatlist
  */
-@WebServlet("/search")
-public class searchForm extends HttpServlet {
+@WebServlet("/addatlist")
+public class addatlist extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchForm() {
+    public addatlist() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,9 +35,11 @@ public class searchForm extends HttpServlet {
 		try {
 			response.setContentType("text/html; charset=UTF-8");
 			db_con _Db = new db_con();
-			word all = new word();
-			all.setWord(request.getParameter("searchWord"));
-			_Db.getallWord(request, response, all);
+			String _id = (request.getParameter("id"));
+			int sWord = Integer.parseInt(request.getParameter("addword"));
+			int type = Integer.parseInt(request.getParameter("type"));
+		
+			_Db.addWordatlist(request,response,_id,sWord,type);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

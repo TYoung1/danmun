@@ -38,7 +38,10 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+	
+//	회원가입
 	public void signup_user(HttpServletRequest request, HttpServletResponse response,user User) throws IOException {
+//		grant 를 제외한 모든정보 삽입
 		String sql = "insert into user (_userid,_userpw,_username,_userage,_gender) values(?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -48,6 +51,7 @@ public class db_con {
 			pstmt.setInt(4,User.getAge());
 			pstmt.setString(5, User.getGender());
 			pstmt.executeUpdate();
+//			완료후 home.jsp로 이동
 			response.sendRedirect("home.jsp");
 		}catch(Exception e) {
 //			아이디 중복
@@ -57,9 +61,11 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+	
+//	로그인
 	public void signin_user(HttpServletRequest request, HttpServletResponse response, user User) throws IOException {
 		try {
-//			
+//			userid 에 해ㅐ당하는 정보 가져오기
 			String sql = "select * from user where _userid = ? ";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,User.getUserid());
@@ -70,8 +76,10 @@ public class db_con {
 				String pw = res.getString("_userpw");
 				String name = res.getString("_username");
 				int grant = res.getInt("_grant");
+//				아이디 일치 확인
 				if(id.equals(User.getUserid())) {
 					idexist= true;
+//					비밀번호 일치 확인
 					if(pw.equals(User.getUserpw())) {
 //						모두 일치할 경우
 						HttpSession session = request.getSession();
@@ -102,6 +110,7 @@ public class db_con {
 			
 		}
 	}
+//	회원탈퇴
 	public void deleteUser(HttpServletRequest request, HttpServletResponse response, String id) {
 		String sql = "delete from user where _userid = ?";
 		try {
@@ -113,8 +122,10 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+//	랜덤한 단어 하나 가져오기
 	public word oneword() {
 		try {
+//			랜덤 limit 1개
 			String sql = "select _word,_mean from word order by rand() limit 1";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			res=pstmt.executeQuery();
@@ -129,8 +140,9 @@ public class db_con {
 		}
 		return null;
 	}
-	public ArrayList<word> getbestWord() {
-//		 가장 마지막에 쓴글 기준 5개 제한 
+//	많이조회한단어 가져오기
+	public ArrayList<word> getbestWord() { 
+//		10개만 가져오기 내림차순 
 		String sql = "select _seq,_word,_mean from word order by _count desc limit 10";
 		ArrayList<word> list = new ArrayList<word>();
 		try {
@@ -149,12 +161,44 @@ public class db_con {
 		}
 		return list;
 	}
-	public ArrayList<word>getallWord(word _word){
+//	많이조회한순서대로 30개 리스트 가져오기
+	public ArrayList<word> getbestList() { 
+//		30개 제한 리스트
+		String sql = "select _seq,_word,_mean from word order by _count desc limit 30";
+		ArrayList<word> list = new ArrayList<word>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			res = pstmt.executeQuery();
+			while (res.next()) {
+				word best = new word();
+//				 SEQ,TITLE,게시날짜  객체에 저장 
+				best.setSeq(res.getInt(1));
+				best.setWord(res.getString(2));
+				best.setMean(res.getString(3));
+				list.add(best);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public void  upcount(String word) {
+		String sql = "update word set _count = _count+1 where _word = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, word);
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+//	검색단어 가져오기
+	public ArrayList<word>getallWord(HttpServletRequest request, HttpServletResponse response,word _word){
+//		검색한 글로 시작하는 단어에대한 정보 모두가져오기
 		String sql = "select _seq,_word,_mean from word where _word like ?";
 		ArrayList<word> list = new ArrayList<word>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			System.out.println(_word.getWord());
 			pstmt.setString(1,_word.getWord()+"%");
 			res = pstmt.executeQuery();
 			
@@ -165,13 +209,19 @@ public class db_con {
 				each.setWord(res.getString(2));
 				each.setMean(res.getString(3));
 				list.add(each);
+				if(_word.getWord().trim().equals(res.getString(2))) {
+					upcount(_word.getWord().trim());
+				}
 			}
+			HttpSession session = request.getSession();
+			session.setAttribute("list", list);
+			response.sendRedirect("findword.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
+//	내단어장에 단어 추가
 	public void addWord(HttpServletRequest request, HttpServletResponse response,String id, int[] save) throws IOException {
 		String sql = "insert into myword (_userid,_seq) values(?,?)";
 		try {
@@ -198,6 +248,28 @@ public class db_con {
 		}
 		
 	}
+//	리스트에서 +버튼으로 추가
+	public void addWordatlist(HttpServletRequest request, HttpServletResponse response,String id,int seq,int type) throws IOException {
+		String sql = "insert into myword (_userid,_seq) values(?,?)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, seq);
+			pstmt.executeUpdate();
+			if(type == 0) {
+				response.sendRedirect("bestlist.jsp");
+			}else if(type == 8) {
+				response.sendRedirect("findword.jsp");
+			}
+			response.sendRedirect("typeword.jsp?type="+ type+"");
+		}catch(Exception e) {
+			HttpSession session = request.getSession();
+			session.setAttribute("dup", "1");
+			response.sendRedirect("findword.jsp");
+			e.printStackTrace();
+		}
+	}
+//	내 단어장에 저장된 단어수 카운팅
 	public String countWord(String id) {
 		String sql = "select count(_userid) from myword where _userid = ?";
 		try {
@@ -212,6 +284,7 @@ public class db_con {
 		}
 		return "0";
 	}
+//	내단어장
 	public ArrayList<word>mywordList(String id,int page) {
 		String sql = "select A._seq,_word,_mean from myword as A inner join word as B on A._seq = B._seq where A._userid = ? order by _order limit ?,10";
 		ArrayList<word> list = new ArrayList<word>();
@@ -232,6 +305,7 @@ public class db_con {
 		}
 		return list;
 	}
+//	내단어장에 단어 삭제
 	public void deleteWord(HttpServletRequest request, HttpServletResponse response,String id,int[]Seq) {
 		String sql = "delete from myword where _userid = ? and _seq = ? ";
 		try {
@@ -246,6 +320,7 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+//	내가 원하는 단어 글로 추가
 	public void addone(HttpServletRequest request, HttpServletResponse response,String id,String word) throws IOException {
 		String sql = "insert into myword (_userid,_seq) values(?,(select _seq from  word where _word = ?))";	
 		try {
@@ -260,7 +335,8 @@ public class db_con {
 			response.sendRedirect("myword.jsp");
 			e.printStackTrace();
 		}
-	}
+ 	}
+//	타입에맞는 단어리스트 가져오기
 	public ArrayList<word>gettypeWord(int type){
 		String sql = "select _seq,_word,_mean from word where _type = ?";
 		ArrayList<word> list = new ArrayList<word>();
