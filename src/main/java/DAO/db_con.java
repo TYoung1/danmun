@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,6 +123,58 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
+//	아이디 찾기 
+	public void findid(HttpServletRequest request, HttpServletResponse response, user _Data)
+			throws IOException {
+		try {
+//			이름과 성별, 생년월일로 정보찾는 쿼리 
+			String sql = "select _userid from user where _username = ? AND _userage = ? ";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, _Data.getUsername());
+			pstmt.setInt(2,_Data.getAge());
+			res= pstmt.executeQuery();
+			while (res.next()) {
+				String id = res.getString(1);
+//				세션객체 사용해서 저장 
+				HttpSession session = request.getSession();
+				session.setAttribute("user_id",id);
+
+				response.sendRedirect("find.jsp");
+			}
+			// 해당 쿼리 결과가 없을 경우 페이지 리로딩
+			response.sendRedirect("find.jsp");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
+//	비밀번호 찾기 
+	public void findpw(HttpServletRequest request, HttpServletResponse response, user _Data)
+			throws IOException {
+		try {
+//			이름과 성별, 생년월일로 정보찾는 쿼리 
+			String sql = "select _userpw from user where _userid = ? AND _username = ? AND _userage = ? ";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, _Data.getUserid());
+			pstmt.setString(2, _Data.getUsername());
+			pstmt.setInt(3,_Data.getAge());
+			res= pstmt.executeQuery();
+			while (res.next()) {
+				String pw = res.getString(1);
+//				세션객체 사용해서 저장 
+				HttpSession session = request.getSession();
+				session.setAttribute("user_pw",pw);
+
+				response.sendRedirect("find.jsp");
+			}
+			// 해당 쿼리 결과가 없을 경우 페이지 리로딩
+			response.sendRedirect("find.jsp");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
+
 //	랜덤한 단어 하나 가져오기
 	public word oneword() {
 		try {
@@ -133,6 +186,23 @@ public class db_con {
 				word one = new word();
 				one.setWord(res.getString(1));
 				one.setMean(res.getString(2));
+				return one;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+//	랜덤 미니게임 단어
+	public word miniword() {
+		String sql = "select _word from word where length(_word) < 6 and length(_word) >4 order by rand() limit 1";
+		try {
+//			랜덤 limit 1개
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			res=pstmt.executeQuery();
+			if(res.next()) {
+				word one = new word();
+				one.setWord(res.getString(1));
 				return one;
 			}
 		}catch(Exception e) {
@@ -260,12 +330,13 @@ public class db_con {
 				response.sendRedirect("bestlist.jsp");
 			}else if(type == 8) {
 				response.sendRedirect("findword.jsp");
-			}
+			}else {
 			response.sendRedirect("typeword.jsp?type="+ type+"");
+			}
 		}catch(Exception e) {
 			HttpSession session = request.getSession();
 			session.setAttribute("dup", "1");
-			response.sendRedirect("findword.jsp");
+			response.sendRedirect("bestlist.jsp");
 			e.printStackTrace();
 		}
 	}

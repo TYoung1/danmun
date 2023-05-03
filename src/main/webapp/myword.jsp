@@ -39,14 +39,14 @@
             <li><a href="typeword.jsp?type=1">토익단어</a></li>
             <li><a href="typeword.jsp?type=4">토스단어</a></li>
             <li><a href="typeword.jsp?type=3">오픽단어</a></li>
-            <li><a href="#">단어테스트</a></li>
+            <li><a href="#">단어게임</a></li>
         </ul>
     </nav>
     <div class="main">
         <div class="wrapper">
             <div class="container">
                 <div class="left">
-                    <form action="deletemine" method="post">
+                    <form action="deletemine" method="post" onsubmit="return re()">
                     <input type="hidden" name="id" value="<%= _id %>"/>
                     <button class="delete" type="submit">Delete</button>
                         <table>
@@ -107,9 +107,10 @@
                 <div class="right">
                     <div class="r_top">
                         <h2><span><%= _name %></span>님 환영합니다</h2>
+                      
                         <div class="info">
+                       	 <a href="minitest.jsp" class="game">머리식히러가기</a>
                             <p>My Word 에 저장된 단어 : <span><%= count %>개</span></p>
-                            <p>Level : <span>2</span></p>
                         </div>
                         <div class="else">
                             <a href="logout.jsp">로그아웃</a>
@@ -131,5 +132,6 @@
         </div>
         
     </div>
+    <script src="resource/js/add.js"></script>
 </body>
 </html>

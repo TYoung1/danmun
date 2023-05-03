@@ -17,14 +17,7 @@
 </head>
 <body>
 	<% String _id = (String)session.getAttribute("userId"); %>
-	<%String _dup = (String)session.getAttribute("dup"); %>
-					<% if(_dup == "1"){ 
-                       		session.removeAttribute("dup");
-                       	%>
-                       	<script>
-							alert("이미 저장되어 있는 단어가 포함되어 있습니다");
-						</script>
-                       	<%}%>
+	
     <nav>
         <a href="home.jsp" class="logo"><h3>단먼</h3></a>
         <ul>

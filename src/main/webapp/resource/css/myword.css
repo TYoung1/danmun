@@ -101,6 +101,10 @@ table tbody tr{
     margin-top: 20px;
     height: 200px;
 }
+.game{
+	color:#6A5ACD;
+	font-size:18px;
+}
 .info p{
     padding: 10px 0;
 }

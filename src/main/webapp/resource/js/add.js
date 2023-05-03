@@ -7,3 +7,14 @@ function chkid(){
 	}
 	return true;
 }
+
+function re() {
+        var checkboxes = document.getElementsByName("del");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                return true;
+            }
+        }
+        alert("적어도 하나의 단어를 선택해주세요.");
+        return false;
+    }

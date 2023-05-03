@@ -26,13 +26,16 @@ if (chk_value != null) {
 <script src="resource/js/input_info.js"></script>
 
 <body>
-	<nav>
-		<a href="Home.jsp" class="logo"><span>개발</span>차</a>
-
-		<ul>
-			<li><a href="Login.jsp">로그인</a></li>
-		</ul>
-	</nav>
+    <nav>
+        <a href="home.jsp" class="logo"><h3>단먼</h3></a>
+        <ul>
+            <li><a href="typeword.jsp?type=2">수능단어</a></li>
+            <li><a href="typeword.jsp?type=1">토익단어</a></li>
+            <li><a href="typeword.jsp?type=4">토스단어</a></li>
+            <li><a href="typeword.jsp?type=3">오픽단어</a></li>
+            <li><a href="minitest.jsp">단어게임</a></li>
+        </ul>
+    </nav>
 	<div class="main">
 		<div class="wrap">
 			<div class="sign_box">

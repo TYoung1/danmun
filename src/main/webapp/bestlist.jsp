@@ -25,6 +25,7 @@
 		<%String _dup = (String)session.getAttribute("dup"); %>
 					<% if(_dup == "1"){ 
                        		session.removeAttribute("dup");
+                       		_dup ="";
                        	%>
                        	<script>
 							alert("이미 저장되어 있는 단어가 포함되어 있습니다");

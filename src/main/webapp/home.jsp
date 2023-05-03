@@ -21,12 +21,14 @@
 			<%String _dup = (String)session.getAttribute("dup"); %>
 					<% if(_dup == "1"){ 
                        		session.removeAttribute("dup");
+                       		_dup="";
                        	%>
                        	<script>
 							alert("이미 저장되어 있는 단어가 포함되어 있습니다");
 						</script>
                        	<%}else if(_dup == "0"){
                        		session.removeAttribute("dup");
+                       		_dup ="";
                            	%>
                            	<script>
     							alert("로그인 후 이용하실 수 있습니다");
@@ -40,7 +42,7 @@
             <li><a href="typeword.jsp?type=1">토익단어</a></li>
             <li><a href="typeword.jsp?type=4">토스단어</a></li>
             <li><a href="typeword.jsp?type=3">오픽단어</a></li>
-            <li><a href="#">단어테스트</a></li>
+            <li><a href="minitest.jsp">단어게임</a></li>
         </ul>
     </nav>
     <div class="main">
@@ -122,8 +124,8 @@
                         <button type="submit" class="log">Login</button>
                      
                         <div class="another">
-                            <div class="findid" onclick="location.href='findid.html'">Find ID</div>
-                            <div class="findpw" onclick="location.href='findpw.html'">Find PW</div>
+                            <div class="findid" onclick="location.href='find.jsp'">Find ID</div>
+                            <div class="findpw" onclick="location.href='find.jsp'">Find PW</div>
                             <div class="singup" onclick="location.href='signup.jsp'">Sign up</div>
                         </div>
                     </form>
@@ -136,8 +138,8 @@
 	                        <h2> <%=_name%>님 환영합니다</h2>
 	                        <ul>
 	                            <li style="text-align:center;"><a href="myword.jsp">내 단어장</a></li>
+	                            <li style="text-align:center;"><a href="minitest.jsp">머리식히러가기</a></li>
 	                            <li>저장된 단어 : <span><%= count %>개</span> </li>
-	                            <li>Level : <span>2</span></li>
 	                        </ul>
 	                        <div class="another">
 	                            <div class="findid" onclick="location.href='logout.jsp'">로그아웃</div>
@@ -151,8 +153,8 @@
                         <h2> <%=_name%>님 환영합니다</h2>
                         <ul>
                             <li style="text-align:center;"><a href="myword.jsp">내 단어장</a></li>
+                            <li style="text-align:center;"><a href="minitest.jsp">머리식히러가기</a></li>
                             <li>저장된 단어 : <span><%= count %>개</span> </li>
-                            <li>Level : <span>2</span></li>
                         </ul>
                         <div class="another">
                         <div class="findid" onclick="location.href='logout.jsp'">공지쓰기</div>
@@ -183,19 +185,27 @@
             <div class="wrapper2">
                 <div class="save">
                     <div class="list"><h2>많이 찾는 단어<a href="bestlist.jsp"><i class="fa-solid fa-plus"></i></a></h2></div>
-                    <form method="post" action="addForm">
+                    <form method="post" action="addForm" onsubmit="return re()">
                     <div class="list_main">
                         <div class="list_top">
                             <div class="seq_t">순서</div><div class="word_t">단어</div><div class="mean_t">의미</div><div class="check_t"><button id="save" type="submit">저장</button></div>
                         </div>
                         <div class="index">
+                        <%if(_id == null){ %>
                         <% for(int i=0;i<10;i++){
                         	ArrayList<word> list = db.getbestWord();
                         	%>
                         
-                            <div class="word_wrap"><div class="seq"><%= i +1 %></div><div class="word"><%= list.get(i).getWord() %></div><div class="mean"><%= list.get(i).getMean() %></div><div class="check"><input type="checkbox" name="save" value="<%= list.get(i).getSeq()%>"></div></div>
+                            <div class="word_wrap"><div class="seq"><%= i +1 %></div><div class="word"><%= list.get(i).getWord() %></div><div class="mean"><%= list.get(i).getMean() %></div><div class="check"><input type="checkbox" disabled="disabled" class="check" name="save" value="<%= list.get(i).getSeq()%>"></div></div>
                            
-                       <%} %>
+                       <%} }else{%>
+                       <% for(int i=0;i<10;i++){
+                        	ArrayList<word> list = db.getbestWord();
+                        	%>
+                        
+                            <div class="word_wrap"><div class="seq"><%= i +1 %></div><div class="word"><%= list.get(i).getWord() %></div><div class="mean"><%= list.get(i).getMean() %></div><div class="check"><input type="checkbox" name="save" class="check" value="<%= list.get(i).getSeq()%>"></div></div>
+                 
+                       <%}} %>
                         </div>
                         <input type="hidden" name ="id" value="<%= _id%>"/>
                     </div>
