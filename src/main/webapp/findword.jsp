@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="resource/css/find.css">
     <script src="https://kit.fontawesome.com/ec5d781ab7.js"
 	crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>단먼 [검색]</title>
 </head>
 <body>
 	<% String _id = (String)session.getAttribute("userId"); %>

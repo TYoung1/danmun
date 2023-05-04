@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="resource/css/findinfo.css">
 <script src="resource/js/login.js"></script>
-<title>Document</title>
+<title>단먼 [아이디,비밀번호찾기]</title>
 </head>
 <body>
 	<nav>

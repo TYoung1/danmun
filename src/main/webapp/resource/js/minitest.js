@@ -21,15 +21,22 @@ for(let i=0; i<5; i++){
 input[i].classList.remove("input");	
 }
 if(chk ==5){
-alert("정답입니다");
+alert("정답입니다\n"+answer);
 }else{
-let template = `<div>
-	<input type="text" class="input" maxlength="1">
-	<input type="text" class="input" maxlength="1">
-	<input type="text" class="input" maxlength="1">
-	<input type="text" class="input" maxlength="1">
-	<input type="text" class="input" maxlength="1">
-</div>`;
+let template = `
+	<input type="text" class="input"  maxlength="1" oninput="handleOnInput(this)">
+	<input type="text" class="input"  maxlength="1" oninput="handleOnInput(this)">
+	<input type="text" class="input"  maxlength="1" oninput="handleOnInput(this)">
+	<input type="text" class="input"  maxlength="1" oninput="handleOnInput(this)">
+	<input type="text" class="input"  maxlength="1" oninput="handleOnInput(this)">
+`;
 document.querySelector(".inputbox").insertAdjacentHTML('beforeend',template);
 }
+}
+
+function focus(){
+	let key = document.getElementByClassName("input");
+	if(this.value.length == this.maxlength){
+		
+	}
 }

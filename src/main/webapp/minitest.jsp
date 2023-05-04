@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>단어 미니게임 </title>
 </head>
 <link rel="stylesheet" type="text/css" href="resource/css/mini.css">
 <body>
@@ -26,14 +26,14 @@
 	<div class="main">
 	<div class="inputbox">
 		<input type="hidden" class="answer" value="<%= day.getWord() %>">
-		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)">
+		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)" autofocus="autofocus">
 		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)">
 		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)">
 		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)">
 		<input type="text" class="input" maxlength="1" oninput="handleOnInput(this)">
 	</div>
-		<div class="btn"><button onclick="result()">확인하기</button>
-		<button onClick="window.location.reload()">다시하기</button></div>
+		<div class="btn"><button onclick="result()">확인</button>
+		<button onClick="window.location.reload()">다시</button></div>
 		
 	</div>
 	<script src="resource/js/minitest.js"></script>

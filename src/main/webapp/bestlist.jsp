@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="resource/css/type.css">
     <script src="https://kit.fontawesome.com/ec5d781ab7.js"
 	crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>단먼 [많이 조회한 단어]</title>
 </head>
 <body>
 <% String _id = (String)session.getAttribute("userId"); %>

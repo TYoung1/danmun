@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>단먼</title>
     <link rel="stylesheet" href="resource/css/home.css">
     <script src="https://kit.fontawesome.com/ec5d781ab7.js"
 	crossorigin="anonymous"></script>
@@ -157,7 +157,6 @@
                             <li>저장된 단어 : <span><%= count %>개</span> </li>
                         </ul>
                         <div class="another">
-                        <div class="findid" onclick="location.href='logout.jsp'">공지쓰기</div>
                             <div class="singup" onclick="location.href='signup.html'">회원관리</div>
                             <div class="findid" onclick="location.href='logout.jsp'">로그아웃</div>
                             <div class="singup" onclick="location.href='quit.jsp'">회원탈퇴</div>
