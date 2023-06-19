@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -291,6 +292,39 @@ public class db_con {
 		}
 		return list;
 	}
+//	회원 조회
+	public List<user>searchUser(HttpServletRequest request, HttpServletResponse response,String type,String what){
+		String sql = "";
+        if ("userid".equals(type)) {
+            sql = "SELECT * FROM user WHERE _userid=?";
+        } else if ("username".equals(type)) {
+            sql = "SELECT * FROM user WHERE _username=?";
+        } else if ("gender".equals(type)) {
+            sql = "SELECT * FROM user WHERE _gender=?";
+        }
+        List<user> list = new ArrayList<user>();
+        try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,what);
+			res = pstmt.executeQuery();
+			
+			while (res.next()) {
+				user each = new user();
+//				 SEQ,TITLE,게시날짜  객체에 저장 
+				each.setUserid(res.getString("_userid"));
+	            each.setUsername(res.getString("_username"));
+	            each.setAge(res.getInt("_userage"));
+	            each.setGender(res.getString("_gender"));
+				list.add(each);
+			}
+			HttpSession session = request.getSession();
+			session.setAttribute("list", list);
+			response.sendRedirect("admin.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return list;
+	}
 //	내단어장에 단어 추가
 	public void addWord(HttpServletRequest request, HttpServletResponse response,String id, int[] save) throws IOException {
 		String sql = "insert into myword (_userid,_seq) values(?,?)";
@@ -387,6 +421,48 @@ public class db_con {
 			pstmt.executeUpdate();
 			}
 			response.sendRedirect("myword.jsp");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+//	유저삭제
+	public void banUser(HttpServletRequest request, HttpServletResponse response,String[] id) {
+		String sql = "delete from user where _userid=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			for(int i=0; i<id.length;i++) {
+				pstmt.setString(1,id[i]);		
+				pstmt.executeUpdate();
+			}
+			response.sendRedirect("admin.jsp");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+//	권한주기
+	public void revokeGrant(HttpServletRequest request,HttpServletResponse response,String[]id ) {
+		String sql = "update user set _grant =0 where _userid=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			for(int i=0; i<id.length;i++) {
+				pstmt.setString(1,id[i]);		
+				pstmt.executeUpdate();
+			}
+			response.sendRedirect("admin.jsp");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+//	권한뺏기
+	public void giveGrant(HttpServletRequest request,HttpServletResponse response,String[]id ) {
+		String sql = "update user set _grant =1 where _userid=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			for(int i=0; i<id.length;i++) {
+				pstmt.setString(1,id[i]);		
+				pstmt.executeUpdate();
+			}
+			response.sendRedirect("admin.jsp");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

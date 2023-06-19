@@ -45,7 +45,7 @@ if (chk_value != null) {
 				<div class="content">
 					<form action="signup" method="post"  onsubmit="return chkall()"
 						>
-						<label>아이디</labe> <input type="text" name="user_id" id="idval"
+						<label>아이디</label> <input type="text" name="user_id" id="idval"
 							>
 							<div id="id_inner" class="warn"></div> <label>비밀번호</label> <input
 							type="password" name="user_pw" id="pwval" >
@@ -58,7 +58,7 @@ if (chk_value != null) {
 							name="user_age" id="ageval" 
 							maxlength="2">
 							<div id="age_inner" class="warn"></div> <label>성별</label> <select
-							name="user_gender" id="genval" onblur=>
+							name="user_gender" id="genval">
 								<option selected disabled value="0">성별선택</option>
 								<option value="male">남</option>
 								<option value="female">여</option>

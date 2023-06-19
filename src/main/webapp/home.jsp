@@ -157,7 +157,7 @@
                             <li>저장된 단어 : <span><%= count %>개</span> </li>
                         </ul>
                         <div class="another">
-                            <div class="singup" onclick="location.href='signup.html'">회원관리</div>
+                            <div class="singup" onclick="location.href='admin.jsp'">회원관리</div>
                             <div class="findid" onclick="location.href='logout.jsp'">로그아웃</div>
                             <div class="singup" onclick="location.href='quit.jsp'">회원탈퇴</div>
                         </div>
