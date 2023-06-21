@@ -1,12 +1,15 @@
 package DAO;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,15 +43,36 @@ public class db_con {
 			e.printStackTrace();
 		}
 	}
-	
+//	비밀번호 암호화
+	private String encryptPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            
+            // 비밀번호를 바이트 배열로 변환하여 해시 함수에 입력
+           byte[]hash = md.digest(password.getBytes("UTF-8"));
+            // 해시된 바이트 배열을 16진수 문자열로 변환
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            
+            return sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 //	회원가입
 	public void signup_user(HttpServletRequest request, HttpServletResponse response,user User) throws IOException {
 //		grant 를 제외한 모든정보 삽입
 		String sql = "insert into user (_userid,_userpw,_username,_userage,_gender) values(?,?,?,?,?)";
+		String encryptP = encryptPassword(User.getUserpw());
+		System.out.println(encryptP);
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, User.getUserid());
-			pstmt.setString(2,User.getUserpw());
+			pstmt.setString(2,encryptP);
 			pstmt.setString(3,User.getUsername());
 			pstmt.setInt(4,User.getAge());
 			pstmt.setString(5, User.getGender());
@@ -73,6 +97,7 @@ public class db_con {
 			pstmt.setString(1,User.getUserid());
 			res = pstmt.executeQuery();
 			boolean idexist = false;
+			String encryptP = encryptPassword(User.getUserpw());
 			if (res.next()) {
 				String id = res.getString("_userid");
 				String pw = res.getString("_userpw");
@@ -82,7 +107,7 @@ public class db_con {
 				if(id.equals(User.getUserid())) {
 					idexist= true;
 //					비밀번호 일치 확인
-					if(pw.equals(User.getUserpw())) {
+					if(pw.equals(encryptP)) {
 //						모두 일치할 경우
 						HttpSession session = request.getSession();
 						session.setAttribute("userId",id);
@@ -153,27 +178,45 @@ public class db_con {
 	public void findpw(HttpServletRequest request, HttpServletResponse response, user _Data)
 			throws IOException {
 		try {
-//			이름과 성별, 생년월일로 정보찾는 쿼리 
-			String sql = "select _userpw from user where _userid = ? AND _username = ? AND _userage = ? ";
+//			새로운 비밀번호 업데이트 
+			String sql = "update user set _userpw = ? where _userid = ?  AND _username = ? AND _userage = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, _Data.getUserid());
-			pstmt.setString(2, _Data.getUsername());
-			pstmt.setInt(3,_Data.getAge());
-			res= pstmt.executeQuery();
-			while (res.next()) {
-				String pw = res.getString(1);
-//				세션객체 사용해서 저장 
+			String pw = newPw();
+			String encryptP = encryptPassword(pw);
+			pstmt.setString(1, encryptP);
+			pstmt.setString(2, _Data.getUserid());
+			pstmt.setString(3, _Data.getUsername());
+			pstmt.setInt(4,_Data.getAge());
+			pstmt.executeUpdate();
 				HttpSession session = request.getSession();
 				session.setAttribute("user_pw",pw);
-
 				response.sendRedirect("find.jsp");
-			}
 			// 해당 쿼리 결과가 없을 경우 페이지 리로딩
 			response.sendRedirect("find.jsp");
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
+	}
+	public String newPw() {
+	
+			char[] charSet = new char[] {
+	                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+	                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+	                '!', '@', '#', '$', '%', '^', '&' };
+	 
+	        StringBuffer sb = new StringBuffer();
+	        SecureRandom sr = new SecureRandom();
+	        sr.setSeed(new Date().getTime());
+	 
+	        int idx = 0;
+	        int len = charSet.length;
+	        for (int i=0; i<10; i++) {
+	            idx = sr.nextInt(len);   
+	            sb.append(charSet[idx]);
+	        }
+			return sb.toString();
 	}
 
 //	랜덤한 단어 하나 가져오기
