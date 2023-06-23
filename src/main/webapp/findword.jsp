@@ -13,9 +13,12 @@
     <link rel="stylesheet" href="resource/css/find.css">
     <script src="https://kit.fontawesome.com/ec5d781ab7.js"
 	crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <title>단먼 [검색]</title>
 </head>
 <body>
+
+	
 	<% String _id = (String)session.getAttribute("userId"); %>
 	
     <nav>
@@ -42,13 +45,13 @@
         <div class="wrapper2">
            <% 
                 	db_con db = new db_con();
-                user User = new user();
+                    user User = new user();
                		word day = db.oneword();
                		ArrayList<word> wordList =(ArrayList<word>)session.getAttribute("list");
                		 for (word each : wordList) { %>
 				<div class="word">
-				<h1><%= each.getWord() %> <span class="more"><form method="post" action="addatlist" onsubmit="return chkid()"><button type="submit">+</button>
-				<input type="hidden" name="addword" value="<%= each.getSeq() %>">
+				<h1><%= each.getWord() %> <span class="more"><form method="post" action="addatlist" onsubmit="return chkid()"><button type="submit" class="getAdd">+</button>
+				<input type="hidden" class="addword" name="addword" value="<%= each.getSeq() %>">
 				 <input type="hidden" name="id" id="idval" value="<%= _id %>">
 				 <input type ="hidden" name="type" value="8">
 				 </form></span></h1>

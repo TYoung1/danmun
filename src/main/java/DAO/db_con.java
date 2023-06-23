@@ -143,11 +143,45 @@ public class db_con {
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,id);
+			deleteUsersWord(id);
 			pstmt.executeUpdate();
 			response.sendRedirect("logout.jsp");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void deleteUsersWord(String id) {
+		String sql = "delete from myword where _userid = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+//	아이디 중복체크
+	public boolean chkId(String id) {
+		String sql = "select count(*) from user where _userid= ?";
+		boolean exist = false;
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,id);
+			res= pstmt.executeQuery();
+		if(res.next()) {
+			int count = res.getInt(1);
+			if(count > 0) {
+				exist = true;
+			}
+		}
+		res.close();
+		pstmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return exist;
 	}
 //	아이디 찾기 
 	public void findid(HttpServletRequest request, HttpServletResponse response, user _Data)

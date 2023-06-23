@@ -8,7 +8,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel="stylesheet" href="resource/css/signup.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+<script>
+  $(document).ready(function() {
+    $(".existchk").click(function() {
+      var id = $("#idval").val();
+      $.ajax({
+        type: "POST",
+        url: "existid",
+        data: {userid: id},
+        success: function(result) {
+        	if (result.trim() === "false") {
+        	      alert("사용 가능한 아이디입니다.");
+        	    } else {
+        	      alert("사용 불가능한 아이디입니다.");
+        	    }
+        },
+        error: function() {
+         
+        }
+      });
+    });
+  });
+</script>
 <%
 Object chk_ = session.getAttribute("chk");
 String chk_value = (String) chk_;
@@ -43,6 +66,7 @@ if (chk_value != null) {
 					<h1>회원가입</h1>
 				</div>
 				<div class="content">
+				<button class="existchk">아이디 중복체크</button>
 					<form action="signup" method="post"  onsubmit="return chkall()"
 						>
 						<label>아이디</label> <input type="text" name="user_id" id="idval"
